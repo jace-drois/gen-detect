@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block bodyblock %}
+
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col">
+            <!-- form : upload the image -->
+            <h3 class="display-8">Gender Classification</h3>
+            <p>Upload an image (.jpg, .jprg, .png).
+               This model will first detect faces and then predict gender 
+            </p>
+            <form action="#" method="POST" enctype="multipart/form-data">
+                <input type="file" class="'form-control" name="image_name" required>
+                <input type="submit" value="upload & predict" class="btn btn-outline-primary">
+                <!-- 'primary' is basically our blue colour-->
+            </form>
+        </div>
+        <div class="col-8">
+            <!-- report: prediction image, reportinh (grayscale, eigen image and probability score) -->
+            <br><br>
+            {% if fileupload %}
+            <!-- predicted image -->
+            <h3 class="display-8">Predicted Image</h3>
+            <img src="/static/predict/prediction_image.jpg" class="image-fluid" width="700" alt="">
+            <hr>
+            <br>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>Detection Face</th>
+                    <th>Eigen Image</th>
+                    <th>Predicted Gender</th>
+                    <th>Score</th>
+                </tr>
+                {% for element in report %}
+                    <tr>
+                        <td>
+                            <img src="/static/predict/{{element[0]}}"  class="image-fluid" height="100" alt="">
+                        </td>
+                        <td>
+                            <img src="/static/predict/{{element[1]}}"  class="image-fluid" height="100" alt="">
+                        </td>
+                        <td>{{ element[2]}}</td>
+                        <td>{{ element[3]}}%</td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+
+            {% endif %}
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
